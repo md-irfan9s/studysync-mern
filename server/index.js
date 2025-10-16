@@ -23,11 +23,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		// origin: [
-		// 	"http://localhost:3000",                 // dev
-		// 	"https://studysync-ebon.vercel.app"
-		// ],
-		origin:"http://localhost:3000",
+		origin: [
+			"http://localhost:3000",                 // dev
+			"https://studysync-mern.vercel.app/"
+		],
+		
 		credentials: true,
 	})
 )
