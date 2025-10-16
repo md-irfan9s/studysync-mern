@@ -8,6 +8,7 @@ import { sendOtp } from "../../../services/operations/authAPI"
 import { setSignupData } from "../../../slices/authSlice"
 import { ACCOUNT_TYPE } from "../../../utils/constants"
 import Tab from "../../common/Tab"
+import {signUp} from "../../../services/operations/authAPI" 
 
 function SignupForm() {
   const navigate = useNavigate()
@@ -38,34 +39,77 @@ function SignupForm() {
   }
 
   // Handle Form Submission
+  // const handleOnSubmit = (e) => {
+  //   e.preventDefault()
+
+  //   if (password !== confirmPassword) {
+  //     toast.error("Passwords Do Not Match")
+  //     return
+  //   }
+  //   const signupData = {
+  //     ...formData,
+  //     accountType,
+  //   }
+
+  //   // Setting signup data to state
+  //   // To be used after otp verification
+  //   dispatch(setSignupData(signupData))
+  //   // Send OTP to user for verification
+  //   // dispatch(sendOtp(formData.email, navigate))
+
+  //   // Reset
+  //   setFormData({
+  //     firstName: "",
+  //     lastName: "",
+  //     email: "",
+  //     password: "",
+  //     confirmPassword: "",
+  //   })
+  //   setAccountType(ACCOUNT_TYPE.STUDENT)
+  // }
+
+
   const handleOnSubmit = (e) => {
-    e.preventDefault()
+  e.preventDefault();
 
-    if (password !== confirmPassword) {
-      toast.error("Passwords Do Not Match")
-      return
-    }
-    const signupData = {
-      ...formData,
-      accountType,
-    }
-
-    // Setting signup data to state
-    // To be used after otp verification
-    dispatch(setSignupData(signupData))
-    // Send OTP to user for verification
-    dispatch(sendOtp(formData.email, navigate))
-
-    // Reset
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    })
-    setAccountType(ACCOUNT_TYPE.STUDENT)
+  if (password !== confirmPassword) {
+    toast.error("Passwords do not match");
+    return;
   }
+
+  const signupData = {
+    accountType,
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    email: formData.email,
+    password: formData.password,
+    confirmPassword: formData.confirmPassword,
+  };
+
+  // ✅ Directly dispatch the signup action
+  dispatch(
+    signUp(
+      signupData.accountType,
+      signupData.firstName,
+      signupData.lastName,
+      signupData.email,
+      signupData.password,
+      signupData.confirmPassword,
+      navigate
+    )
+  );
+
+  // Reset form
+  setFormData({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  setAccountType(ACCOUNT_TYPE.STUDENT);
+};
+
 
   // data to pass to Tab component
   const tabData = [
