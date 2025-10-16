@@ -25,7 +25,7 @@ app.use(
 	cors({
 		origin: [
 			"http://localhost:3000",                 // dev
-			"https://studysync-mern.vercel.app/"
+			"https://studysync-mern.vercel.app"
 		],
 		
 		credentials: true,
